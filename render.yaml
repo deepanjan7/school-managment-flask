@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: school-management-flask
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
