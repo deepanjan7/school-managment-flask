@@ -23,11 +23,13 @@ https://school-managment-flask.onrender.com
 
 ## 📂 Project Structure
 
+```text
 app.py
 requirements.txt
 render.yaml
 templates/
 └── index.html
+```
 
 ## ▶️ How to Run Locally
 1. Clone the repository
