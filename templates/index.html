@@ -6,139 +6,162 @@
     <title>School Management System</title>
 
     <style>
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #f4f7fb, #e9eff5);
-            margin: 0;
-            padding: 0;
-            transition: background 0.3s ease;
+        /* RESET */
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
-        h1 {
-            text-align: center;
-            margin-top: 30px;
-            color: #2c3e50;
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #f5f7f9;
+
+            /* subtle grid background */
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
         .container {
             max-width: 1100px;
-            margin: auto;
-            padding: 20px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
         }
 
+        h1 {
+            text-align: center;
+            margin-bottom: 6px;
+            color: #2c3e50;
+        }
+
+        .tagline {
+            text-align: center;
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 35px;
+            letter-spacing: 0.5px;
+        }
+
+        /* CARD */
         .card {
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-            animation: fadeIn 0.6s ease-in;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 25px;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* FORM ROW */
+        .form-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        input,
-        button {
-            padding: 8px;
-            margin: 5px;
+        input {
+            padding: 10px;
             border-radius: 6px;
             border: 1px solid #ccc;
+            flex: 1;
+            min-width: 120px;
         }
 
         button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            font-weight: bold;
         }
 
-        button:hover {
-            transform: translateY(-1px);
-            opacity: 0.9;
+        .btn-add {
+            background-color: #2ecc71;
+            color: #fff;
         }
 
-        .add-btn {
-            background: #27ae60;
-            color: white;
-            border: none;
+        .btn-search {
+            background-color: #3498db;
+            color: #fff;
         }
 
-        .edit-btn {
-            background: #3498db;
-            color: white;
-            border: none;
-        }
-
-        .delete-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-        }
-
+        /* TABLE */
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 15px;
         }
 
         th {
-            background: #34495e;
+            background-color: #34495e;
             color: white;
             padding: 10px;
+            text-align: left;
         }
 
         td {
             padding: 10px;
-            text-align: center;
+            border-bottom: 1px solid #ddd;
         }
 
-        tr:hover {
-            background-color: #f1f5f9;
-            transform: scale(1.003);
+        a {
+            text-decoration: none;
+            font-weight: normal;
         }
 
+        .edit {
+            color: #2980b9;
+        }
+
+        .delete {
+            color: #e74c3c;
+        }
+
+        /* FOOTER */
         footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid #ddd;
             text-align: center;
-            padding: 15px;
-            font-size: 14px;
+            padding: 10px 0;
+            font-size: 13px;
             color: #555;
-            margin-top: 40px;
         }
     </style>
 </head>
 
 <body>
-
     <div class="container">
         <h1>School Management System</h1>
+        <div class="tagline">Order • Structure • Clarity</div>
 
         <!-- ADD STUDENT -->
         <div class="card">
-            <form method="POST">
-                <input type="number" name="roll" placeholder="Roll" required>
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="text" name="class" placeholder="Class" required>
-                <input type="text" name="section" placeholder="Section" required>
-                <button class="add-btn">Add Student</button>
+            <form method="POST" action="/">
+                <div class="form-row">
+                    <input type="number" name="roll" placeholder="Roll No" required>
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="text" name="class" placeholder="Class" required>
+                    <input type="text" name="section" placeholder="Section" required>
+                    <button class="btn-add" type="submit">Add Student</button>
+                </div>
             </form>
         </div>
 
         <!-- SEARCH -->
         <div class="card">
-            <form method="GET">
-                <input type="text" name="search" placeholder="Search by roll or name">
-                <button>Search</button>
+            <form method="GET" action="/">
+                <div class="form-row">
+                    <input type="text" name="search" placeholder="Search by roll or name">
+                    <button class="btn-search" type="submit">Search</button>
+                </div>
             </form>
         </div>
 
-        <!-- STUDENT LIST -->
+        <!-- TABLE -->
         <div class="card">
             <table>
                 <tr>
@@ -149,23 +172,16 @@
                     <th>Action</th>
                 </tr>
 
-                {% for s in students %}
+                {% for student in students %}
                 <tr>
-                    <td>{{ s.roll }}</td>
-                    <td>{{ s.name }}</td>
-                    <td>{{ s.class }}</td>
-                    <td>{{ s.section }}</td>
+                    <td>{{ student[0] }}</td>
+                    <td>{{ student[1] }}</td>
+                    <td>{{ student[2] }}</td>
+                    <td>{{ student[3] }}</td>
                     <td>
-                        <form action="/edit/{{ s.roll }}" method="POST" style="display:inline;">
-                            <input type="text" name="name" value="{{ s.name }}" required>
-                            <input type="text" name="class" value="{{ s.class }}" required>
-                            <input type="text" name="section" value="{{ s.section }}" required>
-                            <button class="edit-btn">Update</button>
-                        </form>
-
-                        <a href="/delete/{{ s.roll }}">
-                            <button class="delete-btn">Delete</button>
-                        </a>
+                        <a class="edit" href="/edit/{{ student[0] }}">Edit</a> |
+                        <a class="delete" href="/delete/{{ student[0] }}"
+                            onclick="return confirm('Delete this student?')">Delete</a>
                     </td>
                 </tr>
                 {% endfor %}
@@ -175,9 +191,8 @@
 
     <footer>
         © 2025 | School Management System <br>
-        Built using Flask • Developed by <strong>Deepanjan</strong>
+        Built using Flask · Developed by Deepanjan
     </footer>
-
 </body>
 
 </html>

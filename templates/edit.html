@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Student</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #eef2f3, #e3ebf0);
+        }
+
+        .edit-card {
+            width: 400px;
+            margin: 80px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #0d6efd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="edit-card">
+        <h2>Edit Student</h2>
+
+        <form method="POST">
+            <label>Roll No</label>
+            <input type="number" name="roll" value="{{ student[0] }}" required>
+
+            <label>Name</label>
+            <input type="text" name="name" value="{{ student[1] }}" required>
+
+            <label>Class</label>
+            <input type="text" name="class" value="{{ student[2] }}" required>
+
+            <label>Section</label>
+            <input type="text" name="section" value="{{ student[3] }}" required>
+
+            <button type="submit">Update Student</button>
+        </form>
+
+        <a href="/">← Back to Home</a>
+    </div>
+
+</body>
+
+</html>

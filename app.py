@@ -1,14 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect
 import sqlite3
 
 app = Flask(__name__)
 
 DB_NAME = "school.db"
 
+
 def get_db():
-    conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row
-    return conn
+    return sqlite3.connect(DB_NAME)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -16,20 +15,23 @@ def index():
     conn = get_db()
     cursor = conn.cursor()
 
+    # ADD STUDENT
     if request.method == "POST":
         roll = request.form["roll"]
         name = request.form["name"]
-        clas = request.form["class"]
+        class_ = request.form["class"]
         section = request.form["section"]
 
         cursor.execute(
             "INSERT INTO students (roll, name, class, section) VALUES (?, ?, ?, ?)",
-            (roll, name, clas, section),
+            (roll, name, class_, section),
         )
         conn.commit()
-        return redirect(url_for("index"))
+        conn.close()
+        return redirect("/")
 
-    search = request.args.get("search", "")
+    # SEARCH
+    search = request.args.get("search")
     if search:
         cursor.execute(
             "SELECT * FROM students WHERE roll LIKE ? OR name LIKE ?",
@@ -43,31 +45,39 @@ def index():
     return render_template("index.html", students=students)
 
 
+@app.route("/edit/<int:roll>", methods=["GET", "POST"])
+def edit_student(roll):
+    conn = get_db()
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+        new_roll = request.form["roll"]
+        name = request.form["name"]
+        class_ = request.form["class"]
+        section = request.form["section"]
+
+        cursor.execute(
+            "UPDATE students SET roll=?, name=?, class=?, section=? WHERE roll=?",
+            (new_roll, name, class_, section, roll),
+        )
+        conn.commit()
+        conn.close()
+        return redirect("/")
+
+    cursor.execute("SELECT * FROM students WHERE roll=?", (roll,))
+    student = cursor.fetchone()
+    conn.close()
+    return render_template("edit.html", student=student)
+
+
 @app.route("/delete/<int:roll>")
-def delete(roll):
+def delete_student(roll):
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM students WHERE roll=?", (roll,))
     conn.commit()
     conn.close()
-    return redirect(url_for("index"))
-
-
-@app.route("/edit/<int:roll>", methods=["POST"])
-def edit(roll):
-    name = request.form["name"]
-    clas = request.form["class"]
-    section = request.form["section"]
-
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute(
-        "UPDATE students SET name=?, class=?, section=? WHERE roll=?",
-        (name, clas, section, roll),
-    )
-    conn.commit()
-    conn.close()
-    return redirect(url_for("index"))
+    return redirect("/")
 
 
 if __name__ == "__main__":
