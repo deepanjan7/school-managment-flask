@@ -1,116 +1,181 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <title>School Management System</title>
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            padding: 30px;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #f4f7fb, #e9eff5);
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s ease;
         }
 
         h1 {
-            color: #333;
+            text-align: center;
+            margin-top: 30px;
+            color: #2c3e50;
         }
 
-        form {
-            margin-bottom: 20px;
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         input,
         button {
             padding: 8px;
             margin: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
         }
 
         button {
-            background-color: #4CAF50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+        }
+
+        .add-btn {
+            background: #27ae60;
             color: white;
             border: none;
-            cursor: pointer;
+        }
+
+        .edit-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
 
-        th,
+        th {
+            background: #34495e;
+            color: white;
+            padding: 10px;
+        }
+
         td {
-            border: 1px solid #aaa;
             padding: 10px;
             text-align: center;
         }
 
-        th {
-            background-color: #333;
-            color: white;
+        tr:hover {
+            background-color: #f1f5f9;
+            transform: scale(1.003);
         }
 
-        a {
-            color: red;
-            text-decoration: none;
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #555;
+            margin-top: 40px;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>School Management System</h1>
+    <div class="container">
+        <h1>School Management System</h1>
 
-    <h2>Add Student</h2>
-    <form action="/add" method="post">
-        Roll Number:
-        <input type="number" name="roll" required>
+        <!-- ADD STUDENT -->
+        <div class="card">
+            <form method="POST">
+                <input type="number" name="roll" placeholder="Roll" required>
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="class" placeholder="Class" required>
+                <input type="text" name="section" placeholder="Section" required>
+                <button class="add-btn">Add Student</button>
+            </form>
+        </div>
 
-        Name:
-        <input type="text" name="name" required>
+        <!-- SEARCH -->
+        <div class="card">
+            <form method="GET">
+                <input type="text" name="search" placeholder="Search by roll or name">
+                <button>Search</button>
+            </form>
+        </div>
 
-        Class:
-        <input type="text" name="class" required>
+        <!-- STUDENT LIST -->
+        <div class="card">
+            <table>
+                <tr>
+                    <th>Roll</th>
+                    <th>Name</th>
+                    <th>Class</th>
+                    <th>Section</th>
+                    <th>Action</th>
+                </tr>
 
-        Section:
-        <input type="text" name="section" required>
+                {% for s in students %}
+                <tr>
+                    <td>{{ s.roll }}</td>
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.class }}</td>
+                    <td>{{ s.section }}</td>
+                    <td>
+                        <form action="/edit/{{ s.roll }}" method="POST" style="display:inline;">
+                            <input type="text" name="name" value="{{ s.name }}" required>
+                            <input type="text" name="class" value="{{ s.class }}" required>
+                            <input type="text" name="section" value="{{ s.section }}" required>
+                            <button class="edit-btn">Update</button>
+                        </form>
 
-        <button type="submit">Add Student</button>
-    </form>
+                        <a href="/delete/{{ s.roll }}">
+                            <button class="delete-btn">Delete</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 
-    <h2>Student Records</h2>
-
-    <table>
-        <tr>
-            <th>Roll</th>
-            <th>Name</th>
-            <th>Class</th>
-            <th>Section</th>
-            <th>Action</th>
-        </tr>
-
-        {% for student in students %}
-        <tr>
-            <td>{{ student.roll }}</td>
-            <td>{{ student.name }}</td>
-            <td>{{ student.class }}</td>
-            <td>{{ student.section }}</td>
-            <td>
-                <a href="/delete/{{ student.roll }}">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <footer style="
-    margin-top: 40px;
-    padding: 15px;
-    text-align: center;
-    font-size: 14px;
-    color: #777;
-    border-top: 1px solid #ddd;
-">
+    <footer>
         © 2025 | School Management System <br>
-        Built using Flask • Developed by Deepanjan
+        Built using Flask • Developed by <strong>Deepanjan</strong>
     </footer>
 
 </body>
