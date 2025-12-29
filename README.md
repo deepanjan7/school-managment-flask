@@ -1,25 +1,34 @@
-# School Management System (Flask)
+# # School Management System – Flask & SQLite
 
-A simple School Management System built using **Python** and **Flask**.  
-This project allows users to manage student records through a web interface.
+A simple School Management System built using Python, Flask, and SQLite to manage student records through a web-based interface. Developed as part of a school Computer Science curriculum.
+
+---
 
 ## 🚀 Features
-- Add student records
-- View all students
-- Delete student records
-- Web-based interface (accessible via browser)
-- Deployed online using Render
+- Add student records  
+- View all students  
+- Edit student records  
+- Delete student records  
+- Search students by roll number or name  
+- Web-based interface (accessible via browser)  
+- Deployed online using Render  
+
+---
 
 ## 🛠️ Technologies Used
-- Python
-- Flask
-- SQLite
-- HTML & CSS
-- Gunicorn
-- Render (Deployment)
+- Python  
+- Flask  
+- SQLite  
+- HTML & CSS  
+- Gunicorn  
+- Render (Deployment)  
+
+---
 
 ## 🌐 Live Demo
-https://school-managment-flask.onrender.com
+https://school-management-flask-08vg.onrender.com
+
+---
 
 ## 📂 Project Structure
 
@@ -32,16 +41,16 @@ templates/
 ```
 
 ## ▶️ How to Run Locally
-1. Clone the repository
-2. Install dependencies:   
-pip install -r requirements.txt
-3. Run the application:
-python app.py
-4. Open browser and go to:
-http://127.0.0.1:5000
+1. Clone the repository  
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+3. Run the application: python app.py
+4. Open your browser and go
+to: http://127.0.0.1:5000    
 
 ## 📌 Notes
-- This is a learning project created as part of a school Computer Science project.
+- This is a learning project created as part of a school Computer Science Curriculum.
 - The application uses SQLite for simplicity.
 - Free hosting may cause the app to sleep when inactive.
 
